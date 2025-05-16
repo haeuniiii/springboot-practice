@@ -1,0 +1,3 @@
+spring:
+  sql:
+    mode: never
