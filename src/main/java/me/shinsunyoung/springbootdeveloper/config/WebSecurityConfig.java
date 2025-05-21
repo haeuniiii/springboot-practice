@@ -1,0 +1,63 @@
+package me.shinsunyoung.springbootdeveloper.config;
+
+import lombok.RequiredArgsConstructor;
+import me.shinsunyoung.springbootdeveloper.service.UserDetailService;
+import org.springframework.boot.autoconfigure.security.servlet.AntPathRequestMatcherProvider;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
+
+@Configuration
+@EnableWebSecurity
+@RequiredArgsConstructor
+public class WebSecurityConfig {
+
+    private final UseDetailService userService;
+
+    //스프링 시큐리티 가능 비활성화
+    @Bean
+    public WebSecurityCustomizer configure(){
+        return (web) -> web.ignoring()
+                .requestMatchers(toH2Console())
+                .requestMatchers(new AntPathRequestMatcherProvider("/static/**"));
+    }
+
+    //특정 HTTP 요청에 대한 웹 기반 보안 구성
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+        return http
+            .authorizeRequests(auth -> auth  //인증, 인가 설정
+                .requestMatchers(
+                    new AntPathRequestMatcher("/login"),
+                    new AntPathRequestMatcher("/signup"),
+                    new AntPathRequestMatcher("/user")
+                ).permitAll()
+                .anyRequest().authenricated())
+            .formLogin(formLogin -> formLogin //폼 기반 로그인 설정
+                .loginPage("/login")
+                .defaultSuccessUrl("/articles")
+            )
+                    .logout(logout->logout //로그아웃 설정
+                        .logoutSuccessUrl("/login")
+                        .invalidateHttpSession(true)
+                    ).csrf(AbstractHttpConfigure::disable) //csrf 비활성화
+                    .build();
+            }
+
+            //인증 관리자 관련 설정
+            @Bean
+            public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder, UserDetailService userDetailService)
+        throws Exception{
+            DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+            authProvider.setUserDetailsService(uderService);
+            authProvider.setPasswordEncoder(bCryptPasswordEncoder);
+            retrun new ProviderManager(authProvider);
+        }
+
+        //패스워드 인코더로 사용할 빈 등록
+        @Bean
+        public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+        }
+    }
