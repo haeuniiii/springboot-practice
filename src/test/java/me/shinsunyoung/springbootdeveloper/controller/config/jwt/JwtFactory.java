@@ -4,6 +4,10 @@ import lombok.Builder;
 import lombok.Getter;
 import me.shinsunyoung.springbootdeveloper.config.jwt.JwtProperties;
 
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.Header;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 import java.time.Duration;
 import java.util.Date;
 import java.util.Map;
@@ -35,7 +39,7 @@ public class JwtFactory {
         return Jwts.builder()
                 .setSubject(subject)
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
-                .setIssuer(jetProperties.getIssuer())
+                .setIssuer(jwtProperties.getIssuer())
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .addClaims(claims)
