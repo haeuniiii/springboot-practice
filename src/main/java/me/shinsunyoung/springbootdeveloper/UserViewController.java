@@ -1,4 +1,4 @@
-package me.shinsunyoung.springbootdeveloper.controller;
+package me.shinsunyoung.springbootdeveloper;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -2,7 +2,7 @@ package me.shinsunyoung.springbootdeveloper.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.shinsunyoung.springbootdeveloper.config.jwt.JwtProperties;
-import me.shinsunyoung.springbootdeveloper.controller.config.jwt.JwtFactory;
+import me.shinsunyoung.springbootdeveloper.config.jwt.JwtFactory;
 import me.shinsunyoung.springbootdeveloper.domain.RefreshToken;
 import me.shinsunyoung.springbootdeveloper.domain.User;
 import me.shinsunyoung.springbootdeveloper.dto.CreateAccessTokenRequest;

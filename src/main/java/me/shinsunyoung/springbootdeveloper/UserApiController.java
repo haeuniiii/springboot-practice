@@ -1,4 +1,4 @@
-package me.shinsunyoung.springbootdeveloper.controller;
+package me.shinsunyoung.springbootdeveloper;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
