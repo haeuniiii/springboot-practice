@@ -25,7 +25,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain) throws ServletException, IOException {
 
         //요청 헤더의 Authorization 키의 값 조회
-        String AuthorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
+        String authorizationHeader = request.getHeader(HEADER_AUTHORIZATION);
         //가져온 값에서 접두사 제거
         String token = getAccessToken(authorizationHeader);
         //가져온 토큰이 유효한지 확인하고, 유효한 때는 인증 정보 설정
@@ -34,7 +34,7 @@ public class TokenAuthenticationFilter extends OncePerRequestFilter {
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
 
-        FilterChain.doFilter(request, response);
+        filterChain.doFilter(request, response);
     }
 
     private String getAccessToken(String authorizationHeader) {

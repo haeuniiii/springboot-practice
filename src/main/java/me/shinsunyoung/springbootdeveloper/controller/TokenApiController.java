@@ -2,6 +2,7 @@ package me.shinsunyoung.springbootdeveloper.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.shinsunyoung.springbootdeveloper.dto.CreateAccessTokenRequest;
+import me.shinsunyoung.springbootdeveloper.dto.CreateAccessTokenResponse;
 import me.shinsunyoung.springbootdeveloper.service.TokenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class TokenApiController {
 
     @PostMapping("/api/token")
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken
-            (@RequestBody CreatedAccessTokenRequest request){
+            (@RequestBody CreateAccessTokenRequest request){
         String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
 
         return ResponseEntity.status(HttpStatus.CREATED)
